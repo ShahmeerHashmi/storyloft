@@ -186,7 +186,7 @@ export default function Home() {
           viewport={{ once: true }}
           className="container mx-auto px-4"
 >
-          <div className="text-2xl py-28  sm:text-4xl md:text-6xl md:px-80 md:py-24 font-bold absolute left-1/2 transform -translate-x-1/2 sm:left-36 sm:-translate-x-0 -top-12 z-30 tracking-wider text-white [-webkit-text-stroke:1px_white] sm:[-webkit-text-stroke:2px_white] mix-blend-difference">
+<div className="text-xl py-28 sm:text-4xl md:text-6xl md:px-80 md:py-24 font-bold absolute left-1/2 transform -translate-x-1/2 sm:left-36 sm:-translate-x-0 -top-12 z-30 tracking-wider text-white [-webkit-text-stroke:1px_white] sm:[-webkit-text-stroke:2px_white] mix-blend-difference">
             TRENDING NOW
           </div>
           <ImageSlider />
