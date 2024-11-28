@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -194,11 +195,12 @@ className="w-full relative overflow-hidden group border-2 border-green-500 text-
                              bg-black/30 hover:bg-black/50 transition-all duration-300"
                   >
                     <span className="sr-only">Sign in with {provider}</span>
-                    <img
-                      src={`/${provider.toLowerCase()}.svg`}
-                      alt={provider}
-                      className="w-5 h-5"
-                    />
+<Image
+  src={`/${provider.toLowerCase()}.svg`}
+  alt={provider}
+  width={20}
+  height={20}
+/>
                   </motion.button>
                 ))}
               </div>

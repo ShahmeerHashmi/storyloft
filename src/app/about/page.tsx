@@ -212,7 +212,7 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg p-8">
           <h2 className="text-3xl font-bold mb-6">Join Our Community</h2>
           <p className="text-lg mb-8 text-gray-300">
-            Whether you're an avid reader or just starting your reading journey, 
+Whether you&rsquo;re an avid reader or just starting your reading journey,
             StoryLoft is the perfect place for you.
           </p>
           <Link href="/signup">

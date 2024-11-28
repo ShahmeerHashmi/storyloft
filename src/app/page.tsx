@@ -74,12 +74,12 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 pt-20">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
-          >
+<motion.div 
+  initial={fadeInUp.initial}
+  animate={fadeInUp.animate}
+  transition={fadeInUp.transition}
+  className="text-center max-w-4xl mx-auto"
+>
             <motion.h1 
               className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
               initial={{ opacity: 0, y: 20 }}
