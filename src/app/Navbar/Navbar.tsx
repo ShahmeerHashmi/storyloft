@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronDown, Search, Menu } from "lucide-react";
+import { X, ChevronDown, Search, Menu, Heart } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const { isSignedIn } = useUser();
 
   // Handle scroll effect
   useEffect(() => {
@@ -116,6 +118,17 @@ whileHover={{ scale: 1.1, y: -2, color: '#50C878', textShadow: '0 0 10px rgba(80
 
             <NavLink href="/about" label="About" active={pathname === "/about"} />
 
+            {/* Add Wishlist Link */}
+            <Link href="/wishlist">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="text-white hover:text-green-400 transition-colors"
+              >
+                <Heart className="w-5 h-5" />
+              </motion.div>
+            </Link>
+
             {/* Search Button */}
             <motion.button
               whileHover={{ scale: 1.1, rotate: 5 }}
@@ -124,28 +137,48 @@ whileHover={{ scale: 1.1, y: -2, color: '#50C878', textShadow: '0 0 10px rgba(80
             >
               <Search className="w-5 h-5" />
             </motion.button>
+
+            {/* Profile Link */}
+            {isSignedIn && (
+              <Link href="/dashboard">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="text-white hover:text-green-400 transition-colors"
+                >
+                  Profile
+                </motion.button>
+              </Link>
+            )}
+
           </div>
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-4 py-2 text-white hover:text-green-400 transition-colors"
-              >
-                Login
-              </motion.button>
-            </Link>
-            <Link href="/signup">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-4 py-2 border-2 border-green-500 text-green-500 rounded-full hover:bg-green-500/10 transition-all duration-300"
-              >
-                Sign Up
-              </motion.button>
-            </Link>
+            {isSignedIn ? (
+              <UserButton showName />
+            ) : (
+              <>
+                <Link href="https://grateful-malamute-57.accounts.dev/sign-in">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-4 py-2 text-white hover:text-green-400 transition-colors"
+                  >
+                    Login
+                  </motion.button>
+                </Link>
+                <Link href="https://grateful-malamute-57.accounts.dev/sign-up">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-4 py-2 border-2 border-green-500 text-green-500 rounded-full hover:bg-green-500/10 transition-all duration-300"
+                  >
+                    Sign Up
+                  </motion.button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -215,28 +248,9 @@ className="fixed inset-0 bg-black z-40 overflow-y-auto flex flex-col"
                     </motion.div>
                   </Link>
                 </motion.div>
-
-                <div className="pt-6 w-full space-y-4">
-                  <Link href="/login" className="block">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-className="w-full py-3 border-2 border-blue-500 text-blue-500 rounded-full bg-transparent hover:bg-blue-500/10 transition-all duration-300 text-lg font-semibold"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Login
-                    </motion.button>
-                  </Link>
-                  <Link href="/signup" className="block">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-className="w-full py-3 border-2 border-green-500 text-green-500 rounded-full bg-transparent hover:bg-green-500/10 transition-all duration-300 text-lg font-semibold"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Sign Up
-                    </motion.button>
-                  </Link>
+                    {/* auth buttons */}
+                <div className="flex justify-items-center  mr-10 ">
+                <UserButton showName />
                 </div>
               </div>
             </div>

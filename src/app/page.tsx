@@ -6,8 +6,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import ImageSlider from "./ImageSlider/ImageSlider";
 import { useRef } from "react";
 import { BookOpen, Users, Star, ArrowRight } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
 export default function Home() {
+  const { isSignedIn, user } = useUser();
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -74,23 +76,37 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 pt-20">
-<motion.div 
-  initial={fadeInUp.initial}
-  animate={fadeInUp.animate}
-  transition={fadeInUp.transition}
-  className="text-center max-w-4xl mx-auto"
->
-            <motion.h1 
-              className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              Welcome to{" "}
-              <span className="bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text">
-                StoryLoft
-              </span>
-            </motion.h1>
+          <motion.div 
+            initial={fadeInUp.initial}
+            animate={fadeInUp.animate}
+            transition={fadeInUp.transition}
+            className="text-center max-w-4xl mx-auto"
+          >
+            {isSignedIn ? (
+              <motion.h1 
+                className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Welcome back,{" "}
+                <span className="bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text">
+                  {user?.firstName || "Reader"}
+                </span>
+              </motion.h1>
+            ) : (
+              <motion.h1 
+                className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Welcome to{" "}
+                <span className="bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text">
+                  StoryLoft
+                </span>
+              </motion.h1>
+            )}
             
             <motion.p 
               className="text-xl md:text-2xl text-gray-300 mb-8"
@@ -101,36 +117,38 @@ export default function Home() {
               Discover endless worlds through the power of storytelling
             </motion.p>
 
-            <motion.div 
-              className="flex flex-col sm:flex-row justify-center gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <Link href="/novels">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 
-                           text-white rounded-full font-bold text-lg
-                           hover:from-green-600 hover:to-green-700 
-                           transition-all duration-300"
-                >
-                  Explore Books
-                </motion.button>
-              </Link>
-              <Link href="/signup">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-3 border-2 border-green-500 text-green-500 
-                           rounded-full font-bold text-lg
-                           hover:bg-green-500/10 transition-all duration-300"
-                >
-                  Join Now
-                </motion.button>
-              </Link>
-            </motion.div>
+            {!isSignedIn && (
+              <motion.div 
+                className="flex flex-col sm:flex-row justify-center gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <Link href="/novels">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 
+                             text-white rounded-full font-bold text-lg
+                             hover:from-green-600 hover:to-green-700 
+                             transition-all duration-300"
+                  >
+                    Explore Books
+                  </motion.button>
+                </Link>
+                <Link href="/signup">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-3 border-2 border-green-500 text-green-500 
+                             rounded-full font-bold text-lg
+                             hover:bg-green-500/10 transition-all duration-300"
+                  >
+                    Join Now
+                  </motion.button>
+                </Link>
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Stats Section */}
@@ -185,8 +203,8 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="container mx-auto px-4"
->
-<div className="text-xl py-28 sm:text-4xl md:text-6xl md:px-80 md:py-24 font-bold absolute left-1/2 transform -translate-x-1/2 sm:left-36 sm:-translate-x-0 -top-12 z-30 tracking-wider text-white [-webkit-text-stroke:1px_white] sm:[-webkit-text-stroke:2px_white] mix-blend-difference">
+        >
+          <div className="text-xl py-28 sm:text-4xl md:text-6xl md:px-80 md:py-24 font-bold absolute left-1/2 transform -translate-x-1/2 sm:left-36 sm:-translate-x-0 -top-12 z-30 tracking-wider text-white [-webkit-text-stroke:1px_white] sm:[-webkit-text-stroke:2px_white] mix-blend-difference">
             TRENDING NOW
           </div>
           <ImageSlider />
@@ -308,18 +326,20 @@ export default function Home() {
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             Join our community of book lovers and discover your next favorite story.
           </p>
-          <Link href="/signup">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 
-                       text-white rounded-full font-bold text-lg
-                       hover:from-green-600 hover:to-green-700 
-                       transition-all duration-300"
-            >
-              Get Started Now
-            </motion.button>
-          </Link>
+          {!isSignedIn && (
+            <Link href="/signup">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 
+                         text-white rounded-full font-bold text-lg
+                         hover:from-green-600 hover:to-green-700 
+                         transition-all duration-300"
+              >
+                Get Started Now
+              </motion.button>
+            </Link>
+          )}
         </motion.div>
       </section>
     </main>

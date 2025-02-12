@@ -58,7 +58,7 @@ export default function AboutPage() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text"
+            className="text-6xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text"
           >
             About StoryLoft
           </motion.h1>
@@ -68,7 +68,7 @@ export default function AboutPage() {
             transition={{ delay: 0.4 }}
             className="text-xl text-gray-300 max-w-2xl mx-auto px-4"
           >
-            Your premier destination for discovering and enjoying captivating stories from around the world
+            Your premier destination for discovering and enjoying captivating stories from around the world.
           </motion.p>
         </div>
       </motion.div>
@@ -212,7 +212,7 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg p-8">
           <h2 className="text-3xl font-bold mb-6">Join Our Community</h2>
           <p className="text-lg mb-8 text-gray-300">
-Whether you&rsquo;re an avid reader or just starting your reading journey,
+            Whether you’re an avid reader or just starting your reading journey,
             StoryLoft is the perfect place for you.
           </p>
           <Link href="/signup">
